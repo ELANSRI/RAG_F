@@ -1,0 +1,47 @@
+[project]
+name = "rag-against-the-machine"
+version = "1.0.0"
+description = "Retrieval-Augmented Generation over the vLLM codebase"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fire>=0.7.0",
+    "numpy>=1.26",
+    "pydantic>=2.7",
+    "scipy>=1.11",
+    "snowballstemmer>=2.2",
+    "torch>=2.2",
+    "tqdm>=4.66",
+    "transformers>=4.56",
+]
+
+[dependency-groups]
+dev = [
+    "flake8>=7.0",
+    "mypy>=1.10",
+    "pytest>=8.0",
+    "scipy-stubs>=1.11",
+    "types-tqdm>=4.66",
+]
+
+# CPU-only PyTorch wheels on Linux: the campus machines have no GPU and the
+# default CUDA wheels weigh several gigabytes.
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.mypy]
+exclude = ["^data/", "^\\.venv/"]
+
+# These libraries ship no type information.
+[[tool.mypy.overrides]]
+module = ["fire", "snowballstemmer"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

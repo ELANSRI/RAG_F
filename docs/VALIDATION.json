@@ -1,0 +1,141 @@
+{
+  "date": "2026-11-01",
+  "scope": "Local public-data verification of the mandatory-only refactor; not an official grade.",
+  "mandatory_only": true,
+  "mini_rag_removed": true,
+  "application_files": 10,
+  "application_lines": 1177,
+  "previous_application_files": 26,
+  "previous_application_lines": 1809,
+  "checks": {
+    "pytest_cases_passed": 70,
+    "flake8": "passed",
+    "mypy_mandatory_flags": "passed (13 application and test files)",
+    "uv_lock_check_offline": "passed",
+    "uv_sync_locked_offline": "passed (58 installed packages checked)",
+    "mandatory_cli_edge_cases": "passed, all four without unhandled traceback",
+    "single_search_json": "passed",
+    "single_answer_k0_json": "passed",
+    "batch_search_json": "passed",
+    "batch_answer_without_evidence_json": "passed",
+    "evaluate_cli": "passed",
+    "moulinette_imports": false,
+    "submission_archive_smoke": "passed: extracted sources index/search/answer-k0 and make clean, with no old packages or development tests"
+  },
+  "retrieval": {
+    "index_seconds": 43.23671987489797,
+    "summary": {
+      "discovered": 1969,
+      "contributing": 1847,
+      "unreadable": 0,
+      "passages": 25298,
+      "elapsed": 43.23671987489797
+    },
+    "ordered_passage_mismatches": 0,
+    "ordered_top10_prediction_mismatches": 0,
+    "questions": 199,
+    "datasets": {
+      "docs": {
+        "questions": 100,
+        "recall": {
+          "1": 0.65,
+          "3": 0.85,
+          "5": 0.89,
+          "10": 0.93
+        }
+      },
+      "code": {
+        "questions": 99,
+        "recall": {
+          "1": 0.5858585858585859,
+          "3": 0.8181818181818182,
+          "5": 0.8686868686868687,
+          "10": 0.9191919191919192
+        }
+      }
+    }
+  },
+  "throughput": {
+    "questions": 200,
+    "cli_processes": 2,
+    "seconds": 8.609362333780155,
+    "datasets": [
+      {
+        "dataset": "docs",
+        "questions": 100,
+        "seconds": 6.217668666969985
+      },
+      {
+        "dataset": "code",
+        "questions": 100,
+        "seconds": 2.39169366681017
+      }
+    ],
+    "note": "199 public questions; one code question repeated with a distinct ID for timing only"
+  },
+  "generation": {
+    "model": "Qwen/Qwen3-0.6B",
+    "device": "cpu",
+    "dtype": "float32",
+    "max_new_tokens": 128,
+    "intra_op_threads_for_this_check": 4,
+    "checks": [
+      {
+        "question": "What HTTP endpoint is used to dynamically load a LoRA adapter in vLLM?",
+        "answer": "The HTTP endpoint used to dynamically load a LoRA adapter in vLLM is `/v1/load_lora_adapter`.",
+        "reference_answer_for_review_only": "The `/v1/load_lora_adapter` endpoint is used to dynamically load a LoRA adapter in vLLM. You send a POST request to this endpoint with the adapter's name and path in the JSON payload.",
+        "retrieval_has_expected_source": true,
+        "prompt_tokens": 1720,
+        "elapsed_seconds": 130.65420716581866,
+        "local_review": "Correct endpoint and grounded explanation."
+      },
+      {
+        "question": "What parallelism strategy does vLLM support for large-scale deployment of Mixture of Experts models?",
+        "answer": "vLLM supports expert parallelism (EP) for large-scale deployment of Mixture of Experts (MoE) models. This strategy allows experts to be deployed on separate GPUs, improving locality, efficiency, and throughput. The EP is enabled by setting `enable_expert_parallel=True`.",
+        "reference_answer_for_review_only": "vLLM supports large-scale deployment combining Data Parallel attention with Expert or Tensor Parallel MoE layers for distributed serving of Mixture of Experts models.",
+        "retrieval_has_expected_source": true,
+        "prompt_tokens": 1061,
+        "elapsed_seconds": 9.203204500023276,
+        "local_review": "Grounded but incomplete: omits Data Parallel attention and Tensor Parallel alternative."
+      },
+      {
+        "question": "What conditions must be met for vLLM's ModelRunner to use CUDA graphs instead of the regular model?",
+        "answer": "For vLLM's ModelRunner to use CUDA graphs, the following conditions must be met:  \n[1] `model_input.attn_metadata` must not be `None`, and  \n[73161:74561] `decode_meta.use_cuda_graph` must be `True`.",
+        "reference_answer_for_review_only": "Two conditions must be met: `prefill_meta` must be `None` and `decode_meta.use_cuda_graph` must be `True`. When both conditions are satisfied, the ModelRunner uses `self.graph_runners[virtual_engine]` instead of `self.model`.",
+        "retrieval_has_expected_source": true,
+        "prompt_tokens": 1549,
+        "elapsed_seconds": 49.27381004206836,
+        "local_review": "Incorrect/incomplete conditions: misses prefill_meta is None; not accepted as a correct code answer."
+      }
+    ],
+    "limitations": "Known Qwen3-0.6B reasoning limits remain; see the explicit per-answer reviews."
+  },
+  "environment": {
+    "fire": "0.7.1",
+    "numpy": "2.5.3",
+    "pydantic": "2.13.5",
+    "scipy": "1.18.1",
+    "snowballstemmer": "3.1.1",
+    "torch": "2.14.0",
+    "tqdm": "4.70.1",
+    "transformers": "5.17.0",
+    "pytest": "9.1.1"
+  },
+  "source_sha256": {
+    "src/__init__.py": "82d615a99e3b8332ff7f341a54736863ff2c7f018fb12406ec5a883f9797830c",
+    "src/__main__.py": "5a67129bd1807722c67ac25bb981794815ab80b2bda159d4a299ecf9e99caf6e",
+    "src/answering.py": "3c9ac6e5f3a7bd095e3b43e41227f8353cf6366ae171ef9592de975a3655dd0f",
+    "src/chunking.py": "6b0676352085cb90642b68d566cf0616229f4fae4da9c4150f48ba6215bc1558",
+    "src/cli.py": "066931b18cb61a978aeec124c519c5ac2889426b861e9ff758ad5db1506a8e25",
+    "src/evaluation.py": "559c3df288aa0be9d7bebff0b1db9f11ce8cd04d9ba19dc23117d68709c79f05",
+    "src/indexing.py": "9b7f2d464006951f4980671f918e364a7c16270b689572247cc5405b948471b1",
+    "src/models.py": "d99649554b3c8a3c3d6ba12bdc7036be205d1091ba656d32ee51fb13badc3bb7",
+    "src/search.py": "f9f6c3c5b91090f477e619b7ec9363a5c9a1d3c27e4c6e7e8628a834dd934430",
+    "src/storage.py": "80777e800e50ba2edeeb9f76894805c068b0cd8ad2a3789713272bf7effc6cde"
+  },
+  "remaining_external_checks": [
+    "Run official retrieval/answer/edge-case scripts and private datasets during the authorized evaluation.",
+    "Demonstrate understanding and any requested recode during the defense."
+  ],
+  "readme_login": "eanass"
+}
