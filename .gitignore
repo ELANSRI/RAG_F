@@ -1,0 +1,7 @@
+/data/
+/moulinette/
+/moulinette
+/.venv/
+/.cache/
+__pycache__/
+*.py[cod]
